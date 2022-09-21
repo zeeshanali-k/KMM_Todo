@@ -3,7 +3,6 @@ package com.devscion.kmmtodo
 import com.devscion.kmmtodo.model.Todo
 
 class TodoController {
-
     val todos = mutableListOf<Todo>()
 
     fun addTodo(todo: String) {
