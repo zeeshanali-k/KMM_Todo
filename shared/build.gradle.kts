@@ -3,6 +3,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
 }
+val mokoMvvmVersion = "0.14.0"
 
 kotlin {
     android()
@@ -22,13 +23,21 @@ kotlin {
     }
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting{
+            dependencies{
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting{
+            dependencies {
+
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting

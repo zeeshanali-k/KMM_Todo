@@ -15,28 +15,44 @@ struct TodoItem: View {
     var onItemDeleted : ()->()
     
     var body: some View {
-        HStack(alignment:.center){
-            VStack(alignment:.leading){
-                Text(todo.todo)
-                    .font(.body)
-                Text(todo.date)
-                    .font(.caption)
+        Swipeable{
+            FrontView{
+                HStack(alignment:.center){
+                    VStack(alignment:.leading){
+                        Text(todo.todo)
+                            .font(.body)
+                        Text(todo.date)
+                            .font(.caption)
+                    }
+                    Spacer()
+                    Button{
+                        onItemDeleted()
+                    } label: {
+                        Image(systemName: "trash")
+                            .frame(width: 50,height: 50)
+                            .foregroundColor(.red)
+                    }
+                    
+                }.padding()
             }
-            Spacer()
-            Button{
-                onItemDeleted()
-            } label: {
-                Image(systemName: "trash")
-                    .frame(width: 50,height: 50)
-                    .foregroundColor(.red)
+            BackView{
+                HStack{
+                    Spacer().background(Color.red)
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                        .background(Color.red)
+                }.frame(height: 100)
             }
-            
-        }.padding()
+        } onAction: {
+            onItemDeleted()
+        }
     }
 }
 
-//struct TodoItem_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TodoItem()
-//    }
-//}
+struct TodoItem_Previews: PreviewProvider {
+    static var previews: some View {
+        TodoItem(todo: Todo(id: 1, todo: "Test", date: "12-12-2022", isDone: false), onItemDeleted: {
+            
+        })
+    }
+}
