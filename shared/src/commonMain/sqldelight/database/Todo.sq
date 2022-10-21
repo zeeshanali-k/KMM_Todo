@@ -1,0 +1,17 @@
+CREATE TABLE Todo(
+    id INTEGER NOT NULL PRIMARY KEY,
+    todo TEXT NOT NULL,
+    date TEXT NOT NULL,
+    isDone INTEGER NOT NULL
+);
+
+insertNote:
+INSERT OR REPLACE INTO Todo(
+    todo,date,isDone
+) VALUES (?,?,?);
+
+deleteNote:
+DELETE FROM Todo WHERE id=?;
+
+toggleDone:
+UPDATE Todo SET isDone=?;

@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devscion.kmmtodo.Greeting
 import com.devscion.kmmtodo.TodoController
+import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
 fun MyApplicationTheme(
@@ -58,11 +59,12 @@ fun MyApplicationTheme(
     )
 }
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            val todosController = TodoController()
+
             MyApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

@@ -1,15 +1,17 @@
 plugins {
     id("com.android.application")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
     kotlin("android")
 }
 
 android {
     namespace = "com.devscion.kmmtodo.android"
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
-        applicationId = "com.devscion.kmmtodo.android"
+        applicationId = "com.devscion.kmmtodo"
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
     }
@@ -38,5 +40,13 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:1.2.1")
     implementation("androidx.compose.foundation:foundation:1.2.1")
     implementation("androidx.compose.material:material:1.2.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
+    implementation("androidx.activity:activity-compose:1.6.0")
+
+//    Dagger Hilt for DI
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-compiler:2.44")
+}
+
+kapt {
+    correctErrorTypes = true
 }
