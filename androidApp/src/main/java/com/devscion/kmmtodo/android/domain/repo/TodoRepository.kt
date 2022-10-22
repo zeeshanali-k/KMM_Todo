@@ -5,6 +5,7 @@ import com.devscion.kmmtodo.model.Todo
 import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {
-    suspend fun insertTodo(todo: Todo): Flow<DataResponse<Boolean>>
+    suspend fun insertTodo(todo: String): Flow<DataResponse<Boolean>>
+    suspend fun getAllTodos(): Flow<DataResponse<List<Todo>>>
 
 }

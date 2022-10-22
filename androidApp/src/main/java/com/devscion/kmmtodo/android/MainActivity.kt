@@ -3,6 +3,7 @@ package com.devscion.kmmtodo.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,11 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devscion.kmmtodo.Greeting
-import com.devscion.kmmtodo.TodoController
+import com.devscion.kmmtodo.android.presentation.TodoList
+import com.devscion.kmmtodo.android.presentation.TodosViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
@@ -61,31 +61,20 @@ fun MyApplicationTheme(
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val todosViewModel by viewModels<TodosViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             MyApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting(Greeting().greeting())
+                    TodoList(todosViewModel)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(text: String) {
-    Text(text = text)
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        Greeting("Hello, Android!")
     }
 }

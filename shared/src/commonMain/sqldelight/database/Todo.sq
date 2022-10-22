@@ -5,12 +5,15 @@ CREATE TABLE Todo(
     isDone INTEGER NOT NULL
 );
 
-insertNote:
+insertTodo:
 INSERT OR REPLACE INTO Todo(
     todo,date,isDone
 ) VALUES (?,?,?);
 
-deleteNote:
+getAllTodos:
+SELECT * FROM Todo;
+
+deleteTodo:
 DELETE FROM Todo WHERE id=?;
 
 toggleDone:
