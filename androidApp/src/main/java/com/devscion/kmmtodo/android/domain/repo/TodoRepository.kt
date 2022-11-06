@@ -7,5 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface TodoRepository {
     suspend fun insertTodo(todo: String): Flow<DataResponse<Boolean>>
     suspend fun getAllTodos(): Flow<DataResponse<List<Todo>>>
+    suspend fun toggleTodo(todo: Todo): Flow<DataResponse<Boolean>>
+    suspend fun deleteTodo(todo: Todo) : Flow<DataResponse<Boolean>>
 
 }

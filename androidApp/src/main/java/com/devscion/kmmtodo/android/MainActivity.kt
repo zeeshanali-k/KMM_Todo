@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -14,8 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.devscion.kmmtodo.android.presentation.AddTodo
 import com.devscion.kmmtodo.android.presentation.TodoList
 import com.devscion.kmmtodo.android.presentation.TodosViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,9 +75,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    TodoList(todosViewModel)
+                    TodoApp(todosViewModel = todosViewModel)
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TodoApp(todosViewModel: TodosViewModel) {
+    Column(Modifier.fillMaxSize()) {
+        AddTodo(todosViewModel)
+        TodoList(todosViewModel)
     }
 }

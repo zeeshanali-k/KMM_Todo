@@ -2,7 +2,13 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-    @ObservedObject var viewModel = ViewModel()
+    private var todosDbController : TodosDBController
+    
+    @StateObject var viewModel = TodosViewModel(todosDbController: nil)
+    
+    init(todosDbController: TodosDBController) {
+        self.todosDbController = todosDbController
+    }
     
     var body: some View {
         VStack(alignment: .leading){
@@ -37,7 +43,11 @@ struct ContentView: View {
                         }
                     }
                 }.frame(maxHeight: .infinity,alignment: .topLeading)
+            }.onAppear{
+                viewModel.getTodos()
             }
+        }.onAppear{
+            viewModel.setTodosDBController(todosDbController: todosDbController)
         }
     }
 }
@@ -50,27 +60,37 @@ struct ContentView: View {
 
 
 extension ContentView{
-    class ViewModel : ObservableObject{
+    @MainActor class TodosViewModel : ObservableObject{
         
         @Published private(set) var todos : [Todo] = []
         
         @Published var todo : String = ""
         
+        private var todosDbController : TodosDBController? = nil
         func deleteTodo(pos : Int){
-            todoController.deleteTodo(todo: todos[pos])
-            todos = todoController.todos as! [Todo]
+            todosDbController?.deleteTodo(todo: todos[pos])
+            getTodos()
         }
         
         
         func addTodo(){
-            todoController.addTodo(todo: todo)
-            todos = todoController.todos as! [Todo]
+            todosDbController?.addTodo(todoStr: todo)
+            getTodos()
             todo = ""
         }
         
-        private let todoController : TodoController
-        init(){
-            self.todoController = TodoController()
+        
+        func getTodos(){
+            todos = todosDbController?.getTodos() ?? []
         }
+        
+        func setTodosDBController(todosDbController : TodosDBController) {
+            self.todosDbController = todosDbController
+        }
+        
+        init(todosDbController: TodosDBController? = nil) {
+            self.todosDbController = todosDbController
+        }
+    
     }
 }

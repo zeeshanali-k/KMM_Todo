@@ -4,7 +4,6 @@ plugins {
     id("com.android.library")
     id("com.squareup.sqldelight")
 }
-val mokoMvvmVersion = "0.14.0"
 
 kotlin {
     android()

@@ -15,37 +15,23 @@ struct TodoItem: View {
     var onItemDeleted : ()->()
     
     var body: some View {
-        Swipeable{
-            FrontView{
-                HStack(alignment:.center){
-                    VStack(alignment:.leading){
-                        Text(todo.todo)
-                            .font(.body)
-                        Text(todo.date)
-                            .font(.caption)
-                    }
-                    Spacer()
-                    Button{
-                        onItemDeleted()
-                    } label: {
-                        Image(systemName: "trash")
-                            .frame(width: 50,height: 50)
-                            .foregroundColor(.red)
-                    }
-                    
-                }.padding()
+        HStack(alignment:.center){
+            VStack(alignment:.leading){
+                Text(todo.todo)
+                    .font(.body)
+                Text(todo.date)
+                    .font(.caption)
             }
-            BackView{
-                HStack{
-                    Spacer().background(Color.red)
-                    Image(systemName: "trash")
-                        .foregroundColor(.red)
-                        .background(Color.red)
-                }.frame(height: 100)
+            Spacer()
+            Button{
+                onItemDeleted()
+            } label: {
+                Image(systemName: "trash")
+                    .frame(width: 50,height: 50)
+                    .foregroundColor(.red)
             }
-        } onAction: {
-            onItemDeleted()
-        }
+            
+        }.padding()
     }
 }
 

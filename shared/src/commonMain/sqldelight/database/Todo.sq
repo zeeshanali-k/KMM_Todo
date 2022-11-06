@@ -17,4 +17,4 @@ deleteTodo:
 DELETE FROM Todo WHERE id=?;
 
 toggleDone:
-UPDATE Todo SET isDone=?;
+UPDATE Todo SET isDone=? WHERE id=?;

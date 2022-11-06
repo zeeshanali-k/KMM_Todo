@@ -5,11 +5,9 @@ import com.devscion.kmmtodo.android.domain.repo.TodoRepository
 import com.devscion.kmmtodo.data.db.TodosDBController
 import com.devscion.kmmtodo.model.Todo
 import com.devscion.kmmtodo.utils.logAll
-import com.devscoion.kmmtodo.database.TodosDB
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-
 
 class TodoRepositoryImpl @Inject constructor(
     private val todosDBController: TodosDBController
@@ -38,5 +36,28 @@ class TodoRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun toggleTodo(todo: Todo): Flow<DataResponse<Boolean>> = flow {
+        try {
+            todosDBController.toggleTodo(todo)
+            emit(
+                DataResponse.Success(true)
+            )
+        } catch (e: Exception) {
+            e logAll TAG
+            emit(DataResponse.Error(e.localizedMessage ?: "Failed to toggle"))
+        }
+    }
+
+    override suspend fun deleteTodo(todo: Todo): Flow<DataResponse<Boolean>> = flow {
+        try {
+            todosDBController.deleteTodo(todo)
+            emit(
+                DataResponse.Success(true)
+            )
+        } catch (e: Exception) {
+            e logAll TAG
+            emit(DataResponse.Error(e.localizedMessage ?: "Failed to delete"))
+        }
+    }
 
 }

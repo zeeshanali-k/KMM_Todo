@@ -21,11 +21,16 @@ class TodosViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val todoController: TodoHelper = TodoHelper()
+    val todoValue = MutableStateFlow("")
 
     private val _todosState: MutableStateFlow<List<Todo>> = MutableStateFlow(listOf())
     val todosState: StateFlow<List<Todo>> = _todosState
 
     init {
+        getTodos()
+    }
+
+    private fun getTodos() {
         viewModelScope.launch(Dispatchers.IO) {
             todoRepository.getAllTodos().collectLatest { dr ->
                 if (dr is DataResponse.Success) {
@@ -37,16 +42,33 @@ class TodosViewModel @Inject constructor(
         }
     }
 
-    fun addTodo(todo: String) {
-        todoController.addTodo(todo)
+    fun addTodo() {
+        if(todoValue.value.isEmpty()) return
         viewModelScope.launch(Dispatchers.IO) {
-            todoRepository.insertTodo(todoController.todos.last()).collectLatest { dr ->
+            todoRepository.insertTodo(todoValue.value).collectLatest { dr ->
                 if (dr is DataResponse.Success) {
-                    _todosState.update {
-                        it.toMutableList().apply {
-                            add(todoController.todos.last())
-                        }.toList()
-                    }
+                    getTodos()
+                    todoValue.value = ""
+                }
+            }
+        }
+    }
+
+    fun toggleDone(todo: Todo) {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoRepository.toggleTodo(todo).collectLatest {
+                if (it is DataResponse.Success) {
+                    getTodos()
+                }
+            }
+        }
+    }
+
+    fun deleteTodo(todo: Todo) {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoRepository.deleteTodo(todo).collectLatest {
+                if (it is DataResponse.Success) {
+                    getTodos()
                 }
             }
         }

@@ -1,24 +1,21 @@
 package com.devscion.kmmtodo.android.presentation
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 
 @Composable
 fun TodoList(
-    viewModel: TodosViewModel
-){
-    val todos = viewModel.todosState.collectAsState()
-    LaunchedEffect(key1 = true){
-        viewModel.addTodo("Testing")
-    }
+    todosViewModel: TodosViewModel
+) {
+    val todos = todosViewModel.todosState.collectAsState()
 
-    Column(Modifier.fillMaxSize()) {
-        for (todo in todos.value){
-            TodoListItem(todo)
+    LazyColumn(Modifier.fillMaxSize()) {
+        items(todos.value) {
+            TodoListItem(it, todosViewModel)
         }
     }
 

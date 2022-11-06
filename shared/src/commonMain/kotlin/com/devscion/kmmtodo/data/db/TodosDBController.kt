@@ -19,8 +19,19 @@ class TodosDBController(
         return todosQueries.getAllTodos().executeAsList().toTodosList()
     }
 
+    fun toggleTodo(todo: Todo) {
+        todosQueries.toggleDone(
+            if (todo.isDone) 0L else 1L,
+            todo.id
+        )
+    }
+
 
     private fun List<database.Todo>.toTodosList(): List<Todo> = map {
         Todo(it.id, it.todo, it.date, it.isDone == 1L)
+    }
+
+    fun deleteTodo(todo: Todo) {
+        todosQueries.deleteTodo(todo.id)
     }
 }
