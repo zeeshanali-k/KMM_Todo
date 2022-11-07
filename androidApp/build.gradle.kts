@@ -4,7 +4,7 @@ plugins {
     id("kotlin-kapt")
     kotlin("android")
 }
-
+val vName = "1.0"
 android {
     namespace = "com.devscion.kmmtodo.android"
     compileSdk = 33
@@ -13,7 +13,7 @@ android {
         minSdk = 21
         targetSdk = 33
         versionCode = 1
-        versionName = "1.0"
+        versionName = vName
     }
     buildFeatures {
         compose = true
@@ -45,6 +45,10 @@ dependencies {
 //    Dagger Hilt for DI
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-compiler:2.44")
+}
+
+task("printVersionName") {
+    print(vName)
 }
 
 kapt {
