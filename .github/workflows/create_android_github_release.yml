@@ -1,7 +1,7 @@
 name: Upload APK in Releases
 on:
   push:
-    branches: [ "asdb" ]
+    branches: [ "master" ]
 
 jobs:
   apk:
