@@ -1,9 +1,9 @@
 # KMM Todo App For Android & iOS
 Simple Android and iOS Todo Mobile App using KMM with SqlDelight as local database.
 
+## Working
 
-
-Update Following line in "shared.podspec" under shared moduel:
+Update Following line in "shared.podspec" under shared module, before running iOS app:
 
 
 ```podspec
